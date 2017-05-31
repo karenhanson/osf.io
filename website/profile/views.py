@@ -356,6 +356,9 @@ def get_profile_summary(user_id, formatter='long'):
 def user_profile(auth, **kwargs):
     user = auth.user
     return {
+        'profile': {
+            'fullname': user.fullname
+        },
         'user_id': user._id,
         'user_api_url': user.api_url,
     }

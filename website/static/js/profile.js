@@ -525,7 +525,7 @@ var extendLink = function(obs, $parent, label, baseUrl) {
     return obs;
 };
 
-var SocialViewModel = function(urls, modes, preventUnsaved) {
+var SocialViewModel = function(userId, urls, modes, preventUnsaved) {
     var self = this;
     BaseViewModel.call(self, urls, modes, preventUnsaved);
     TrackedMixin.call(self);
@@ -624,6 +624,21 @@ var SocialViewModel = function(urls, modes, preventUnsaved) {
         self, 'ssrn', 'http://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id='
     );
 
+    var rmap_obs = ko.observable().extend({trimmed: true});
+
+    rmap_obs.getLink = function() {
+        return self.rmap('https://osf.io/' + userId);
+    };
+
+    rmap_obs.removeLink = function() {
+        return self.rmap('');
+    };
+
+    self.rmap = extendLink(
+        rmap_obs,
+        self, 'rmap', 'https://test.rmap-hub.org/resources?uri='
+    );
+
     self.trackedProperties = [
         self.profileWebsites,
         self.orcid,
@@ -638,6 +653,7 @@ var SocialViewModel = function(urls, modes, preventUnsaved) {
         self.academiaProfileID,
         self.baiduScholar,
         self.ssrn,
+        self.rmap,
     ];
 
     var validated = ko.validatedObservable(self);
@@ -659,6 +675,7 @@ var SocialViewModel = function(urls, modes, preventUnsaved) {
             {label: 'Academia', text: self.academiaInstitution() + '.academia.edu/' + self.academiaProfileID(), value: self.academiaInstitution.url() + self.academiaProfileID.url()},
             {label: 'Baidu Scholar', text: self.baiduScholar(), value: self.baiduScholar.url()},
             {label: 'SSRN', text: self.ssrn(), value: self.ssrn.url()},
+            {label: 'RMap', text: self.rmap(), value: self.rmap.url()},
         ];
     });
 

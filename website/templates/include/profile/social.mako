@@ -131,6 +131,19 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label>RMap</label>
+                <span class="fa fa-info-circle" data-bind="tooltip: {title: 'When RMap is enabled, a link to a visualization of your profile and projects will be displayed.', placement: 'bottom', container : 'body'}"></span>
+                <div class="input-group">
+                    <span class="input-group-addon" data-bind="visible: rmap">https://test.rmap-hub.org/resources?uri=</span>
+                    <input class="form-control" data-bind="value: rmap, visible: rmap" readonly="true" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" data-bind="click: rmap.getLink, visible: !rmap()">Display RMap Link</button>
+                        <button class="btn btn-primary" data-bind="click: rmap.removeLink, visible: rmap">Remove RMap Link</button>
+                     </span>
+                </div>
+            </div>
+
             <div class="p-t-lg p-b-lg">
 
                 <button
@@ -171,7 +184,9 @@
                 <tr data-bind="if: value">
                     <td><a target="_blank" data-bind="attr: {href: value}"><span data-bind="html: iconName(label)"></span></a></td>
                     <td><span data-bind="text: label"></span></td>
-                    <td><a target="_blank" data-bind="attr: {href: value}, text: text"></a></td>
+                    <td>
+                        <a target="_blank" data-bind="attr: {href: value}, text: label === 'RMap' ? '${profile["fullname"]}' : text"></a>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -200,7 +215,8 @@ iconName = function(name) {
         "ResearchGate": "<i class='ai ai-researchgate-square ai-2x' />",
         "Academia": "<i class='ai ai-academia-square ai-2x' />",
         "Baidu Scholar": "<img src='http://www.baidu.com/favicon.ico' class='icon-image'>",
-        "SSRN": "<img src='https://www.google.com/s2/favicons?domain=http://www.ssrn.com/' class='icon-image'>"
+        "SSRN": "<img src='https://www.google.com/s2/favicons?domain=http://www.ssrn.com/' class='icon-image'>",
+        "RMap": "<img src='https://test.rmap-hub.org/app/includes/images/nodeicons/disco.png' class='icon-image'>"
     };
     return nameToHtml[name];
 }
