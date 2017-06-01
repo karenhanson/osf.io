@@ -13,7 +13,7 @@ var publicNodes = require('../components/publicNodes.js');
 
 var ctx = window.contextVars;
 // Instantiate all the profile modules
-new profile.Social('#social', ctx.socialUrls, ['view'], false);
+new profile.Social('#social', ctx.currentUser.id, ctx.socialUrls, ['view'], false);
 new profile.Jobs('#jobs', ctx.jobsUrls, ['view'], false);
 new profile.Schools('#schools', ctx.schoolsUrls, ['view'], false);
 
